@@ -6,7 +6,7 @@ O projeto integra um **front-end desenvolvido em React** com uma **API REST dese
 
 ## 📖 Sobre o projeto
 
-O **Diário de Viagens** permite que o usuário registre informações sobre os lugares visitados, incluindo:
+O **Diário de Viagens** permite registrar informações sobre os lugares visitados, como:
 
 - **Fotografia do local**
 - **Nome do lugar**
@@ -16,7 +16,7 @@ O **Diário de Viagens** permite que o usuário registre informações sobre os 
 - **Data de partida**
 - **Descrição da experiência**
 
-As informações cadastradas são **enviadas para a API e armazenadas no banco de dados**. A tela de visualização consulta a API para apresentar os registros cadastrados.
+Os dados preenchidos no front-end são enviados para a API e armazenados no banco de dados. A tela de visualização realiza uma consulta à API para apresentar as viagens cadastradas.
 
 ## ⚙️ Funcionalidades
 
@@ -25,7 +25,7 @@ As informações cadastradas são **enviadas para a API e armazenadas no banco d
 - **Exclusão de viagens**
 - **Pré-visualização da fotografia informada**
 - **Validação dos dados enviados**
-- **Navegação entre as telas da aplicação**
+- **Navegação entre as telas**
 - **Integração entre Front-end e API REST**
 
 ## 💻 Tecnologias utilizadas
@@ -71,25 +71,42 @@ diario-de-viagem/
 └── .gitignore
 ````
 
----
-
 ## 🗄️ Banco de dados
 
 A aplicação utiliza o banco de dados relacional **H2**.
 
-O script responsável pela criação da tabela está localizado em:
+As configurações de conexão estão no arquivo:
+
+```text
+API/integrador/src/main/resources/application.properties
+```
+
+O script utilizado para criação da tabela está em:
 
 ```text
 API/integrador/src/main/resources/schema.sql
 ```
 
-A tabela principal da aplicação é **`viagem`**, responsável por armazenar os dados das viagens cadastradas.
+A tabela principal é a **`viagem`**, responsável por armazenar os dados cadastrados.
+
+A estrutura possui os seguintes campos:
+
+* **id**
+* **foto_url**
+* **nome_lugar**
+* **continente**
+* **localidade**
+* **data_chegada**
+* **data_partida**
+* **descricao_experiencia**
+
+O banco H2 utilizado no projeto é executado em memória durante a execução da API.
 
 ---
 
 ## 🔗 Integração entre Front-end e API
 
-O front-end utiliza o **Axios** para realizar as requisições HTTP para a API REST.
+O front-end utiliza o **Axios** para realizar as requisições HTTP à API REST.
 
 A API é executada localmente em:
 
@@ -97,47 +114,43 @@ A API é executada localmente em:
 http://localhost:8080
 ```
 
-O recurso utilizado para as operações relacionadas às viagens é:
+O recurso utilizado para as operações de viagem é:
 
 ```text
 http://localhost:8080/viagens
 ```
 
-O front-end utiliza a API para:
+A integração utiliza os seguintes métodos:
 
-* **Enviar novas viagens** através do método `POST`;
-* **Buscar as viagens cadastradas** através do método `GET`;
-* **Excluir viagens** através do método `DELETE`.
+* **GET** — consulta as viagens cadastradas;
+* **POST** — cadastra uma nova viagem;
+* **DELETE** — exclui uma viagem pelo identificador.
 
-A documentação detalhada dos endpoints está disponível no arquivo **[CONTRATO.md](./CONTRATO.md)**.
+A API permite requisições do front-end executado em:
+
+```text
+http://localhost:5173
+```
+
+A documentação completa dos endpoints, incluindo parâmetros, exemplos de requisição e resposta, regras de validação e códigos HTTP, está disponível em [**CONTRATO.md**](./CONTRATO.md).
 
 ---
 
 ## ▶️ Como executar
 
-Para utilizar a aplicação, o **back-end e o front-end devem ser executados simultaneamente**.
+Para utilizar a aplicação, é necessário executar o **back-end e o front-end simultaneamente**.
 
-### 🔹 Back-end
+### 1. Back-end — Spring Boot
 
-Abra um terminal na pasta da API:
+Entre na pasta `API/integrador` e abra o projeto na IDE.
 
-```bash
-cd API/integrador
-```
+Depois de carregar o projeto e suas dependências, execute a classe `IntegradorApplication`.
 
-Execute o projeto:
+Com a aplicação iniciada, a API poderá ser acessada em:
 
-```bash
-mvnw.cmd spring-boot:run
-```
+`http://localhost:8080`
 
-A API será disponibilizada em:
-
-```text
-http://localhost:8080
-```
-
-### 🔹 Front-end
+### Front-end
 
 Abra outro terminal na pasta do front-end:
 
@@ -163,9 +176,9 @@ O Vite informará no terminal o endereço para acessar o front-end, normalmente:
 http://localhost:5173
 ```
 
-### ⚠️ Importante
+### Importante
 
-A **API e o front-end devem estar em execução simultaneamente** para que o cadastro, a visualização e a exclusão das viagens funcionem corretamente.
+A **API e o front-end devem permanecer em execução simultaneamente** para que o cadastro, a visualização e a exclusão das viagens funcionem corretamente.
 
 ---
 
@@ -195,13 +208,10 @@ Banco de dados H2
 
 A API disponibiliza os seguintes endpoints:
 
-| **Método** | **Endpoint**    | **Descrição**                    |
-| ---------- | --------------- | -------------------------------- |
-| `GET`      | `/viagens`      | **Lista as viagens cadastradas** |
-| `POST`     | `/viagens`      | **Cadastra uma nova viagem**     |
-| `DELETE`   | `/viagens/{id}` | **Exclui uma viagem**            |
+| Método   | Endpoint        | Descrição                        |
+| -------- | --------------- | -------------------------------- |
+| `GET`    | `/viagens`      | **Lista as viagens cadastradas** |
+| `POST`   | `/viagens`      | **Cadastra uma nova viagem**     |
+| `DELETE` | `/viagens/{id}` | **Exclui uma viagem**            |
 
-Para consultar os **parâmetros, formatos das requisições e respostas, regras de validação e códigos HTTP**, acesse o **[Contrato da API](./CONTRATO.md)**.
-
-```
-```
+Para consultar os **parâmetros, formatos das requisições e respostas, regras de validação e códigos HTTP**, acesse o [**Contrato da API**](./CONTRATO.md).
