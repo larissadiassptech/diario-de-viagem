@@ -4,7 +4,7 @@ Aplicação web desenvolvida para **registrar, visualizar e excluir experiência
 
 O projeto integra um **front-end desenvolvido em React** com uma **API REST desenvolvida em Java e Spring Boot**, utilizando **JdbcTemplate** e banco de dados **H2**.
 
-## 📖 Sobre o projeto
+## Sobre o projeto
 
 O **Diário de Viagens** permite registrar informações sobre os lugares visitados, como:
 
@@ -18,7 +18,7 @@ O **Diário de Viagens** permite registrar informações sobre os lugares visita
 
 Os dados preenchidos no front-end são enviados para a API e armazenados no banco de dados. A tela de visualização realiza uma consulta à API para apresentar as viagens cadastradas.
 
-## ⚙️ Funcionalidades
+## Funcionalidades
 
 - **Cadastro de viagens**
 - **Visualização das viagens cadastradas**
@@ -28,7 +28,7 @@ Os dados preenchidos no front-end são enviados para a API e armazenados no banc
 - **Navegação entre as telas**
 - **Integração entre Front-end e API REST**
 
-## 💻 Tecnologias utilizadas
+## Tecnologias utilizadas
 
 ### Front-end
 
@@ -49,7 +49,7 @@ Os dados preenchidos no front-end são enviados para a API e armazenados no banc
 
 ---
 
-## 📁 Estrutura do projeto
+## Estrutura do projeto
 
 ```text
 diario-de-viagem/
@@ -71,7 +71,7 @@ diario-de-viagem/
 └── .gitignore
 ````
 
-## 🗄️ Banco de dados
+## Banco de dados
 
 A aplicação utiliza o banco de dados relacional **H2**.
 
@@ -136,7 +136,7 @@ A documentação completa dos endpoints, incluindo parâmetros, exemplos de requ
 
 ---
 
-## ▶️ Como executar
+## Como executar
 
 Para utilizar a aplicação, é necessário executar o **back-end e o front-end simultaneamente**.
 
@@ -182,7 +182,7 @@ A **API e o front-end devem permanecer em execução simultaneamente** para que 
 
 ---
 
-## 🔄 Fluxo da aplicação
+## Fluxo da aplicação
 
 ```text
 Usuário
@@ -204,7 +204,7 @@ Banco de dados H2
 
 ---
 
-## 🌐 API
+## API
 
 A API disponibiliza os seguintes endpoints:
 
