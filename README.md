@@ -104,7 +104,7 @@ O banco H2 utilizado no projeto é executado em memória durante a execução da
 
 ---
 
-## 🔗 Integração entre Front-end e API
+## Integração entre Front-end e API
 
 O front-end utiliza o **Axios** para realizar as requisições HTTP à API REST.
 
@@ -150,7 +150,7 @@ Com a aplicação iniciada, a API poderá ser acessada em:
 
 `http://localhost:8080`
 
-### Front-end
+### 2. Front-end — React
 
 Abra outro terminal na pasta do front-end:
 
