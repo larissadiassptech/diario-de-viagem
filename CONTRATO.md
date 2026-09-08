@@ -193,7 +193,6 @@ Para utilizar a aplicação, é necessário executar os dois projetos:
 
 ```bash
 cd API/integrador
-mvnw.cmd spring-boot:run
 ```
 
 **Front-end**
