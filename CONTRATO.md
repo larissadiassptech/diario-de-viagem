@@ -1,140 +1,28 @@
-# 📋 Contrato da API — Diário de Viagens
+# Documentação da API — Diário de Viagens
 
-## 1. Objetivo
+## Informações gerais
 
-A API do **Diário de Viagens** é responsável por receber, validar, consultar e excluir os registros de viagens realizados pelo usuário.
+**Base URL:** `http://localhost:8080`
 
-A comunicação entre o **front-end React** e o **back-end Java com Spring Boot** ocorre por meio de requisições HTTP utilizando uma API REST.
+A API utiliza o recurso `/viagens` para realizar as operações de cadastro, consulta e exclusão das viagens.
 
----
+**Front-end:** `http://localhost:5173`
 
-## 2. Tecnologias utilizadas
-
-- **Java 21**
-- **Spring Boot**
-- **JdbcTemplate**
-- **H2 Database**
-- **Maven**
+A API possui CORS configurado para permitir a comunicação com o front-end durante a execução local.
 
 ---
 
-## 3. URL base
+## GET /viagens
 
-Durante a execução local, a API estará disponível em:
+Retorna as viagens cadastradas.
 
-```text
-http://localhost:8080
-````
+**Parâmetros:** nenhum.
 
-O recurso principal da aplicação é:
-
-```text
-/viagens
-```
-
----
-
-# 4. Endpoints
-
-## 4.1 GET `/viagens`
-
-### Descrição
-
-Retorna todas as viagens cadastradas no banco de dados.
-
-### Método HTTP
-
-```text
-GET
-```
-
-### URL
-
-```text
-http://localhost:8080/viagens
-```
-
-### Parâmetros
-
-Não possui parâmetros.
-
-### Resposta de sucesso
-
-**Status: `200 OK`**
+**Resposta de sucesso — 200 OK**
 
 ```json
 [
-    {
-        "id": 1,
-        "fotoUrl": "https://exemplo.com/paris.jpg",
-        "nomeLugar": "Torre Eiffel",
-        "continente": "Europa",
-        "localidade": "Paris, França",
-        "dataChegada": "2026-07-10",
-        "dataPartida": "2026-07-15",
-        "descricaoExperiencia": "Uma experiência incrível em Paris."
-    }
-]
-```
-
----
-
-## 4.2 POST `/viagens`
-
-### Descrição
-
-Realiza o cadastro de uma nova viagem.
-
-### Método HTTP
-
-```text
-POST
-```
-
-### URL
-
-```text
-http://localhost:8080/viagens
-```
-
-### Cabeçalho
-
-```text
-Content-Type: application/json
-```
-
-### Corpo da requisição
-
-```json
-{
-    "fotoUrl": "https://exemplo.com/paris.jpg",
-    "nomeLugar": "Torre Eiffel",
-    "continente": "Europa",
-    "localidade": "Paris, França",
-    "dataChegada": "2026-07-10",
-    "dataPartida": "2026-07-15",
-    "descricaoExperiencia": "Uma experiência incrível em Paris."
-}
-```
-
-### Campos da requisição
-
-| **Campo**              | **Tipo** | **Obrigatório** | **Descrição**                           |
-| ---------------------- | -------- | --------------- | --------------------------------------- |
-| `fotoUrl`              | String   | **Sim**         | URL da fotografia do local              |
-| `nomeLugar`            | String   | **Sim**         | Nome do lugar visitado                  |
-| `continente`           | String   | **Sim**         | Continente onde o local está localizado |
-| `localidade`           | String   | **Sim**         | Cidade e país do local                  |
-| `dataChegada`          | Date     | **Sim**         | Data de chegada                         |
-| `dataPartida`          | Date     | Não             | Data de partida                         |
-| `descricaoExperiencia` | String   | **Sim**         | Descrição da experiência                |
-
-### Resposta de sucesso
-
-**Status: `201 Created`**
-
-```json
-{
+  {
     "id": 1,
     "fotoUrl": "https://exemplo.com/paris.jpg",
     "nomeLugar": "Torre Eiffel",
@@ -143,113 +31,126 @@ Content-Type: application/json
     "dataChegada": "2026-07-10",
     "dataPartida": "2026-07-15",
     "descricaoExperiencia": "Uma experiência incrível em Paris."
-}
-```
-
-### Resposta para dados inválidos
-
-**Status: `400 Bad Request`**
-
-O status `400` é retornado quando os dados enviados não atendem às regras de validação da aplicação.
+  }
+]
+````
 
 ---
 
-## 4.3 DELETE `/viagens/{id}`
+## POST /viagens
 
-### Descrição
+Cadastra uma nova viagem.
 
-Exclui uma viagem cadastrada utilizando seu identificador.
+**Content-Type:** `application/json`
 
-### Método HTTP
+**Exemplo de requisição:**
 
-```text
-DELETE
+```json
+{
+  "fotoUrl": "https://exemplo.com/paris.jpg",
+  "nomeLugar": "Torre Eiffel",
+  "continente": "Europa",
+  "localidade": "Paris, França",
+  "dataChegada": "2026-07-10",
+  "dataPartida": "2026-07-15",
+  "descricaoExperiencia": "Uma experiência incrível em Paris."
+}
 ```
 
-### URL
+### Campos
 
-```text
-http://localhost:8080/viagens/{id}
+| Campo                  | Tipo   | Obrigatório | Observação           |
+| ---------------------- | ------ | ----------- | -------------------- |
+| `fotoUrl`              | string | Sim         | Não pode estar vazio |
+| `nomeLugar`            | string | Sim         | Não pode estar vazio |
+| `continente`           | string | Sim         | Não pode estar vazio |
+| `localidade`           | string | Sim         | Não pode estar vazio |
+| `dataChegada`          | date   | Sim         | Data de chegada      |
+| `dataPartida`          | date   | Não         | Data de partida      |
+| `descricaoExperiencia` | string | Sim         | Não pode estar vazio |
+
+O campo `id` é gerado automaticamente pela API e não deve ser enviado no cadastro.
+
+A `dataPartida`, quando informada, não pode ser anterior à `dataChegada`.
+
+**Resposta de sucesso — 201 Created**
+
+```json
+{
+  "id": 1,
+  "fotoUrl": "https://exemplo.com/paris.jpg",
+  "nomeLugar": "Torre Eiffel",
+  "continente": "Europa",
+  "localidade": "Paris, França",
+  "dataChegada": "2026-07-10",
+  "dataPartida": "2026-07-15",
+  "descricaoExperiencia": "Uma experiência incrível em Paris."
+}
 ```
 
-### Parâmetros
+**Resposta de erro — 400 Bad Request**
 
-| **Parâmetro** | **Tipo** | **Obrigatório** | **Descrição**           |
-| ------------- | -------- | --------------- | ----------------------- |
-| `id`          | Integer  | **Sim**         | Identificador da viagem |
+Retornada quando algum campo obrigatório não é preenchido ou quando a data de partida é anterior à data de chegada.
 
-### Exemplo
+Exemplo:
+
+```json
+{
+  "fotoUrl": "",
+  "nomeLugar": "Torre Eiffel",
+  "continente": "Europa",
+  "localidade": "Paris, França",
+  "dataChegada": "2026-07-10",
+  "dataPartida": "2026-07-15",
+  "descricaoExperiencia": "Uma experiência incrível em Paris."
+}
+```
+
+Resultado: `400 Bad Request`.
+
+A resposta de erro não possui corpo.
+
+---
+
+## DELETE /viagens/{id}
+
+Exclui uma viagem utilizando seu identificador.
+
+**Parâmetro:**
+
+| Parâmetro | Tipo   | Obrigatório | Observação   |
+| --------- | ------ | ----------- | ------------ |
+| `id`      | number | Sim         | ID da viagem |
+
+**Exemplo:**
 
 ```text
 DELETE http://localhost:8080/viagens/1
 ```
 
-### Resposta de sucesso
+**Resposta de sucesso — 204 No Content**
 
-**Status: `204 No Content`**
+A viagem é excluída e a resposta não possui corpo.
 
-A viagem foi excluída com sucesso.
+**Resposta de erro — 404 Not Found**
 
-### Resposta quando a viagem não existe
-
-**Status: `404 Not Found`**
-
-Ocorre quando não existe uma viagem com o identificador informado.
+Retornada quando não existe uma viagem com o `id` informado.
 
 ---
 
-# 5. Regras de validação
+## Códigos de resposta
 
-Antes de realizar o cadastro, a API verifica os dados recebidos.
-
-Os seguintes campos são obrigatórios:
-
-* `fotoUrl`
-* `nomeLugar`
-* `continente`
-* `localidade`
-* `dataChegada`
-* `descricaoExperiencia`
-
-O campo `dataPartida` é **opcional**.
-
-Quando informado, a **data de partida não pode ser anterior à data de chegada**.
-
-Caso alguma regra não seja atendida, o cadastro não é realizado e a API retorna:
-
-```text
-400 Bad Request
-```
+| Método | Endpoint        | Sucesso        | Erro            |
+| ------ | --------------- | -------------- | --------------- |
+| GET    | `/viagens`      | 200 OK         | —               |
+| POST   | `/viagens`      | 201 Created    | 400 Bad Request |
+| DELETE | `/viagens/{id}` | 204 No Content | 404 Not Found   |
 
 ---
 
-# 6. Códigos HTTP
+## Banco de dados
 
-| **Código**        | **Descrição**                  |
-| ----------------- | ------------------------------ |
-| `200 OK`          | Consulta realizada com sucesso |
-| `201 Created`     | Viagem cadastrada com sucesso  |
-| `400 Bad Request` | Dados enviados são inválidos   |
-| `404 Not Found`   | Viagem não encontrada          |
-| `204 No Content`  | Viagem excluída com sucesso    |
-
----
-
-# 7. CORS
-
-A API permite requisições provenientes do front-end React executado localmente em:
-
-```text
-http://localhost:5173
-```
-
-Essa configuração permite a comunicação entre o **front-end e o back-end** durante a execução local da aplicação.
-
----
-
-# 8. Banco de dados
-
-A API utiliza o banco de dados relacional **H2**.
+A API utiliza o **H2 Database**.
 
 O script responsável pela criação da tabela está localizado em:
 
@@ -257,15 +158,11 @@ O script responsável pela criação da tabela está localizado em:
 API/integrador/src/main/resources/schema.sql
 ```
 
-A tabela utilizada pela API é:
+A tabela utilizada é `viagem`.
 
-```text
-viagem
-```
+A estrutura da tabela é:
 
-### Estrutura da tabela
-
-| **Campo**               | **Tipo**      |
+| Campo                   | Tipo          |
 | ----------------------- | ------------- |
 | `id`                    | INT           |
 | `foto_url`              | VARCHAR(500)  |
@@ -278,27 +175,33 @@ viagem
 
 ---
 
-# 9. Integração com o Front-end
+## Integração com o Front-end
 
-O front-end React utiliza o **Axios** para consumir os endpoints disponibilizados pela API.
+O front-end utiliza **Axios** para realizar as requisições para a API.
 
-As principais operações realizadas pelo cliente são:
+As operações utilizadas são:
 
 ```text
-POST /viagens
-    ↓
-Cadastro da viagem
-
 GET /viagens
-    ↓
-Consulta das viagens
-
+POST /viagens
 DELETE /viagens/{id}
-    ↓
-Exclusão da viagem
 ```
 
-O **front-end e a API devem estar em execução simultaneamente** para que a integração funcione corretamente.
+Para utilizar a aplicação, é necessário executar os dois projetos:
 
+**API**
+
+```bash
+cd API/integrador
+mvnw.cmd spring-boot:run
 ```
+
+**Front-end**
+
+```bash
+cd frontend/diario-de-viagens
+npm install
+npm run dev
 ```
+
+A API ficará disponível em `http://localhost:8080` e o front-end em `http://localhost:5173`.
